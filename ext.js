@@ -1,6 +1,7 @@
 (function(ext) {
 	ext.incomingBroadcasts = {};
 	ext.vars = {};
+	ext.partyFull = false;
 	
 	ext._shutdown = function() {
 	
@@ -33,6 +34,8 @@
 				ext.incomingBroadcasts[message.message] = true;
 			} else if(message.type == "set") {
 				ext.vars[message.varName] = message.value;
+			} else if(message.type == "partyFull") {
+				ext.partyFull = true;
 			}
 		}
 		
@@ -73,6 +76,36 @@
 		});
 	}
 	
+	ext.partyCreate = function(name) {
+		ext.send({
+			type: "partyCreate",
+			name: name,
+		}); 
+	}
+	
+	ext.partyJoin = function(name) {
+		ext.send({
+			type: "partyJoin",
+			name: name,
+		});
+	}
+
+	
+	ext.partyJoinAny = function() {
+		ext.send({
+			type: "partyAny",
+		});
+	}
+	
+	ext.whenPartyFull = function() {
+		if(ext.partyFull) {
+			ext.partyFull = false;
+			return true;
+		}
+		
+		return false;
+	}
+	
 	var descriptor = {
 		blocks: [
 			['w', 'connect to mesh server %s port %n', 'connect', 'localhost', 4354],
@@ -81,7 +114,14 @@
 			['h', 'when I receive %s', 'whenIReceive', 'message 1'],
 			
 			['r', 'value of %s', 'var', 'score'],
-			[' ', 'set %s to %s', 'setVar', 'score', '10']
+			[' ', 'set %s to %s', 'setVar', 'score', '10'],
+			
+			[' ', 'create group owned by %s', 'partyCreate', 'Scratch Cat'],
+			[' ', 'join the group of %s', 'partyJoin', 'Scratch Cat'],
+						
+			[' ', 'join any group', 'partyJoinAny'],
+			
+			['h', 'when party is full', 'whenPartyFull']
 		]
 	};
 	
