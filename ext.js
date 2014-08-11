@@ -68,4 +68,4 @@
 	};
 	
 	ScratchExtensions.register('Mesh', descriptor, ext);
-});
+})({});
