@@ -30,6 +30,12 @@ wss.on('connection', function(ws) {
 				type: "broadcast",
 				message: message.message
 			}, ws);
+		} else if(message.type == "set") {
+			routeMessage({
+				type: "set",
+				varName: message.varName,
+				value: message.value
+			}, ws);
 		}
 	});
 	

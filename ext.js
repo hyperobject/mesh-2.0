@@ -1,5 +1,6 @@
 (function(ext) {
 	ext.incomingBroadcasts = {};
+	ext.vars = {};
 	
 	ext._shutdown = function() {
 	
@@ -30,6 +31,8 @@
 			
 			if(message.type == "broadcast") {
 				ext.incomingBroadcasts[message.message] = true;
+			} else if(message.type == "set") {
+				ext.vars[message.varName] = message.value;
 			}
 		}
 		
@@ -58,12 +61,27 @@
 		return false;
 	}
 	
+	ext.var = function(varName) {
+		return ext.vars[varName] || "";
+	}
+	
+	ext.setVar = function(varName, value) {
+		ext.send({
+			type: "set",
+			varName: varName,
+			value: value
+		});
+	}
+	
 	var descriptor = {
 		blocks: [
 			['w', 'connect to mesh server %s port %n', 'connect', 'localhost', 4354],
 			
 			[' ', 'broadcast %s', 'broadcast', 'message 1'],
-			['h', 'when I receive %s', 'whenIReceive', 'message 1']
+			['h', 'when I receive %s', 'whenIReceive', 'message 1'],
+			
+			['r', 'value of %s', 'var', 'score'],
+			[' ', 'set %s to %s', 'setVar', 'score', '10']
 		]
 	};
 	
