@@ -27,3 +27,22 @@ Once you are in a group, you can use the following blocks for communication:
 - the "when I receive" and "broadcast" blocks, which are identical to the standard blocks, except they are broadcasted to the other Scratcher's computer
 - the "set variable to value" and "value of variable" blocks which will allow you to share variables over the network (note: no variable creation is required)
 - the "my player ID" block which will give you a unique number within your group (useful for determining who get's what avatar or who controls shared objects, for instance)
+
+Advanced: Hosting mesh
+========
+
+At the time of writing (August 14, 2014), the Scratch Team does not have a public mesh server to connect to. In the future, the Scratch Team or an advanced Scratcher may setup a public server, but for the time being, you will need to host a mesh server. 
+
+To host mesh, you will need node.js and the ws module.
+
+1) download and install node.js from the node.js website (http://nodejs.org). If you already have node, you can skip this step
+2) download the server.js file from this repository and save it in an empty folder
+3) cd into the folder with the server.js file
+4) at your shell, enter
+	$ npm install ws
+5) finally, to start the server from this directory, enter at your shell:
+	$ node server.js
+
+You will need to repeat steps 3 and 5 whenever you would like to start the mesh server.
+
+On the Scratch side, the connect block should connect to your IP address and the port 4354. For making the mesh server publicly available, use your public IP address, port forwarding the port 4354. For playing over LAN (within your network), find your private IP address (typically 192.168.1.* or 10.*.*.*) and connect using that from Scratch.
