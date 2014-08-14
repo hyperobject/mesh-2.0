@@ -36,13 +36,19 @@ At the time of writing (August 14, 2014), the Scratch Team does not have a publi
 To host mesh, you will need node.js and the ws module.
 
 1) download and install node.js from the node.js website (http://nodejs.org). If you already have node, you can skip this step
+
 2) download the server.js file from this repository and save it in an empty folder
+
 3) cd into the folder with the server.js file
+
 4) at your shell, enter
-	$ npm install ws
+
+$ npm install ws
+
 5) finally, to start the server from this directory, enter at your shell:
-	$ node server.js
+
+$ node server.js
 
 You will need to repeat steps 3 and 5 whenever you would like to start the mesh server.
 
-On the Scratch side, the connect block should connect to your IP address and the port 4354. For making the mesh server publicly available, use your public IP address, port forwarding the port 4354. For playing over LAN (within your network), find your private IP address (typically 192.168.1.* or 10.*.*.*) and connect using that from Scratch.
+On the Scratch side, the connect block should connect to your IP address and the port 4354. For making the mesh server publicly available, use your public IP address, port forwarding the port 4354. For playing over LAN (within your network), find your private IP address (typically 192.168.1.*) and connect using that from Scratch.
