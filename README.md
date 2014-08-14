@@ -3,6 +3,11 @@ mesh-2.0
 
 Implements a mesh-like system for Scratch 2.0, using Scratch 2.0's extension feature and a node.js server.
 
+Connecting to mesh
+========
+
+When the flag is clicked, the first thing you'll want to do is use the connect to mesh block. It has fields for an IP address and port, which whoever sets up the mesh server will tell you the values for (see the section "Hosting mesh" for more information)
+
 Match-making
 ========
 
@@ -14,3 +19,11 @@ or B) "Any" groups. Using the "join any group" block, the server will match the 
 
 Once a second player is found, the "when group full" hat block will activate.
 
+Using mesh
+========
+
+Once you are in a group, you can use the following blocks for communication:
+
+- the "when I receive" and "broadcast" blocks, which are identical to the standard blocks, except they are broadcasted to the other Scratcher's computer
+- the "set variable to value" and "value of variable" blocks which will allow you to share variables over the network (note: no variable creation is required)
+- the "my player ID" block which will give you a unique number within your group (useful for determining who get's what avatar or who controls shared objects, for instance)
