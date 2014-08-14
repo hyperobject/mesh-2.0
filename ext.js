@@ -3,6 +3,8 @@
 	ext.vars = {};
 	ext.partyFull = false;
 	
+	ext.playerID = 1;
+	
 	ext._shutdown = function() {
 	
 	};
@@ -36,6 +38,7 @@
 				ext.vars[message.varName] = message.value;
 			} else if(message.type == "partyFull") {
 				ext.partyFull = true;
+				ext.playerID = message.playerID + 1;
 			}
 		}
 		
@@ -106,6 +109,10 @@
 		return false;
 	}
 	
+	ext.getPlayerID = function() {
+		return ext.playerID;
+	}
+	
 	var descriptor = {
 		blocks: [
 			['w', 'connect to mesh server %s port %n', 'connect', 'localhost', 4354],
@@ -121,7 +128,9 @@
 						
 			[' ', 'join any group', 'partyJoinAny'],
 			
-			['h', 'when party is full', 'whenPartyFull']
+			['h', 'when group is full', 'whenPartyFull'],
+			
+			['r', 'my player ID', 'getPlayerID']
 		]
 	};
 	

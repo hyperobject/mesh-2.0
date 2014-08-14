@@ -21,9 +21,9 @@ wss.on('connection', function(ws) {
 		
 		var data = JSON.stringify(msg);
 		
-		for(var i in wss.clients)
-			if(wss.clients[i] != excluding)
-				wss.clients[i].send(data);
+		for(var i = 0; i < myParty.participants.length; ++i)
+			if(myParty.participants[i] != excluding)
+				myParty.participants[i].send(data);
 	}
 	
 	
@@ -41,7 +41,7 @@ wss.on('connection', function(ws) {
 				type: "set",
 				varName: message.varName,
 				value: message.value
-			}, ws);
+			});
 		} else if(message.type == "partyCreate") {
 			if(!myParty) {
 				var party = {
@@ -59,9 +59,13 @@ wss.on('connection', function(ws) {
 						parties[i].participants.push(ws);
 						myParty = parties[i];
 						parties.splice(i, 0);
-						routeMessage({
-							type: "partyFull"
-						});
+						
+						for(var i = 0; i < myParty.participants.length; ++i) {
+							myParty.participants[i].send(JSON.stringify({
+								type: "partyFull",
+								playerID: i
+							}))
+						}
 						break;
 					}
 				}
@@ -69,8 +73,8 @@ wss.on('connection', function(ws) {
 			}
 		} else if(message.type == "partyAny") {
 			if(partyAny) {
-				myparty = { participants: [partyAny, ws] };
-				partyAny.emit('match', myparty);
+				myParty = { participants: [partyAny, ws] };
+				partyAny.emit('match', myParty);
 			} else {
 				partyAny = ws; 
 			}
@@ -79,9 +83,16 @@ wss.on('connection', function(ws) {
 	});
 	
 	ws.on('match', function(party) {
-		myparty = party;
-		routeMessage({
-			type: "partyFull"
-		})
+		myParty = party;
+		
+		console.log(party);
+		
+		for(var i= 0; i < myParty.participants.length; ++i) {
+			myParty.participants[i].send(JSON.stringify({
+				type: "partyFull",
+				playerID: i
+			}))
+		}
+
 	})
 })
